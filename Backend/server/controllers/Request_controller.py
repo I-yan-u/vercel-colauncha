@@ -22,22 +22,18 @@ async def form_submit(
     description: str = Form(...),
     attachment: Optional[UploadFile] = File(None),
 ) -> APIResponse:
+
     result = ServiceResultModel()
-    required_skills = [skill.strip(", ") for skill in required_skills.split(",")] \
-        if "," in required_skills and len(required_skills) > 0 \
-        else [required_skills.strip()]
+
+    if not required_skills: required_skills = None
+    elif "," in required_skills and len(required_skills) > 0:
+        required_skills = [skill.strip(", ") for skill in required_skills.split(",")]
+    else: [required_skills.strip()]
+
     file_content = None
     file_name = None
     file_type = None
     allowed_content_types = ["application/pdf", "image/jpeg", "image/png"]
-    # # Parse required skills JSON string
-    # if required_skills:
-    #     try:
-    #         parsed_skills = json.loads(required_skills)
-    #     except json.JSONDecodeError as e:
-    #         error_msg = "Failed to parse 'required_skills'. Invalid JSON format."
-    #         logger.error(f"{error_msg}: {e}")
-    #         raise ErrorMessage(message=error_msg, status_code=400, detail=e.msg )
 
     try:
         request_data = RequestSchema(
@@ -71,7 +67,7 @@ async def form_submit(
                 detail=str(e),
                 message=error_msg
             )
-    print(request_data.model_dump())
+
     RequestFormServices().form_submit(
     request_data,
     file_content,

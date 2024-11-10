@@ -35,7 +35,6 @@ class RequestFormServices:
                     app_configs.email_settings.MAIL_USERNAME,
                     app_configs.email_settings.MAIL_PASSWORD
                 )
-                print(message)
                 server.send_message(message)
             result.data = {"message": "Request submitted successfully"}
             return result

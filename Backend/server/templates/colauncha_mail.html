@@ -1,19 +1,110 @@
 <!-- templates/colauncha_mail.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Service Request</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+        .description {
+            font-size: 15px;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-left: 4px solid #4CAF50;
+            background-color: #f4f4f4;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: 500;
+            text-align: left;
+        }
+        td {
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Service Request</h1>
-    <p><b>Company name:</b> {{ company_name }}</p>
-    <p><b>Project name:</b> {{ project_name }}</p>
-    <p><b>Budget:</b> {{ estimated_budget }}</p>
-    <p><b>Timeline (days):</b> {{ max_project_time }}</p>
-    <p><b>Country:</b> {{ country }}</p>
-    <br>
-    <pre><b>Description:</b> {{ description }}</pre>
-    <p><b>Phone:</b> {{ phone }}</p>
-    <p><b>Email Address:</b> {{ email }}</p>
+    <div class="container">
+        <h1>Service Request</h1>
+        
+        <div class="description">
+            <strong>Description:</strong> {{ description }}
+        </div>
+        
+        <table>
+            <tr>
+                <th>Parameter</th>
+                <th>Details</th>
+            </tr>
+            <tr>
+                <td><strong>Company Name</strong></td>
+                <td>{{ company_name }}</td>
+            </tr>
+            <tr>
+                <td><strong>Project Name</strong></td>
+                <td>{{ project_name }}</td>
+            </tr>
+            <tr>
+                <td><strong>Budget</strong></td>
+                <td>{{ estimated_budget }}</td>
+            </tr>
+            <tr>
+                <td><strong>Timeline (days)</strong></td>
+                <td>{{ max_project_time }}</td>
+            </tr>
+            <tr>
+                <td><strong>Country</strong></td>
+                <td>{{ country }}</td>
+            </tr>
+            <tr>
+                <td><strong>Phone</strong></td>
+                <td>{{ phone }}</td>
+            </tr>
+            <tr>
+                <td><strong>Email Address</strong></td>
+                <td>{{ email }}</td>
+            </tr>
+        </table>
+    </div>
 </body>
 </html>

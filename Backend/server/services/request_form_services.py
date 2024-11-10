@@ -51,7 +51,6 @@ class RequestFormServices:
         except (Exception, ValidationError, smtplib.SMTPException) as e:
             result.add_error(str(e))
             print(f'Error type: {type(e)}\nError: {e}')
-            raise e
             raise ErrorMessage(
                 message="Something went wrong with sending request", 
                 status_code=500,

@@ -1,3 +1,4 @@
+from email.message import EmailMessage
 from server.utils.exception_handler import ErrorMessage
 from server.configs import message, app_configs
 from server.schemas import RequestSchema, ServiceResultModel
@@ -36,6 +37,47 @@ class RequestFormServices:
                 )
                 server.send_message(message)
                 message.clear_content() 
+            result.data = {"message": "Request submitted successfully"}
+            return result
+        except (Exception, ValidationError, smtplib.SMTPException) as e:
+            result.add_error(str(e))
+            print(f'Error type: {type(e)}\nError: {e}')
+            raise ErrorMessage(
+                message="Something went wrong with sending request", 
+                status_code=500,
+                detail="Error on server side"
+            )
+
+    def form_submit_company(
+            self, requestform: RequestSchema,
+            filename: str
+        ) -> ServiceResultModel:
+
+        result = ServiceResultModel()
+        try:
+            form = RequestSchema.model_validate(requestform)
+            parameters = form.model_dump()
+            parameters['filename'] = filename
+            message_company = EmailMessage()
+            message_company["From"] = app_configs.email_settings.MAIL_USERNAME
+            message_company["To"] = form.email
+            message_company["Subject"] = "Talent request form submitted successfully"
+            message_company.add_alternative(
+                get_html_template('company_mail.html', **parameters),
+                subtype='html'
+            )
+
+            with smtplib.SMTP(
+                app_configs.email_settings.MAIL_SERVER,
+                app_configs.email_settings.MAIL_PORT,
+            ) as server:
+                server.starttls()
+                server.login(
+                    app_configs.email_settings.MAIL_USERNAME,
+                    app_configs.email_settings.MAIL_PASSWORD
+                )
+                server.send_message(message)
+                message_company.clear_content() 
             result.data = {"message": "Request submitted successfully"}
             return result
         except (Exception, ValidationError, smtplib.SMTPException) as e:

@@ -73,7 +73,13 @@ async def form_submit(
     file_content,
     file_name, file_type
     )
-    # background_tasks.add_task(RequestFormServices().form_submit, request_data, file_content, file_name, file_type)
+
+    background_tasks.add_task(
+        RequestFormServices().form_submit,
+        request_data,
+        file_name
+    )
+
     return APIResponse(
         data=result.data,
         message="Request submitted successfully"

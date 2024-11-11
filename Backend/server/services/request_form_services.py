@@ -1,4 +1,3 @@
-from sys import stderr
 from server.utils.exception_handler import ErrorMessage
 from server.configs import message, app_configs
 from server.schemas import RequestSchema, ServiceResultModel
@@ -36,6 +35,7 @@ class RequestFormServices:
                     app_configs.email_settings.MAIL_PASSWORD
                 )
                 server.send_message(message)
+                message.clear_content() 
             result.data = {"message": "Request submitted successfully"}
             return result
         except (Exception, ValidationError, smtplib.SMTPException) as e:

@@ -40,7 +40,7 @@ class AppConfigs(BaseSettings):
     email_settings: EmailSettings = EmailSettings()
     DEBUG: bool = True
     ENVIRONMENT: str = ""
-    ALLOWED_ORIGINS: list[str]
+    ALLOWED_ORIGINS: list[str] = []
 
 
 app_configs = AppConfigs()

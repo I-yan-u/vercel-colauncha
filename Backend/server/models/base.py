@@ -1,7 +1,6 @@
-import datetime
-from uuid import UUID
+from datetime import datetime, timezone
 import uuid
-from sqlalchemy import Column, DateTime
+from sqlalchemy import Column, DateTime, UUID
 from server.configs.database import Base
 
 
@@ -14,8 +13,8 @@ class ModelBase(Base):
     __abstract__ = True
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    created_at = Column(DateTime, default=datetime.now)
-    updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
+    created_at = Column(DateTime(timezone=True), default=datetime.now(tz=timezone.utc))
+    updated_at = Column(DateTime(timezone=True), onupdate=datetime.now(tz=timezone.utc))
 
     def to_dict(self) -> dict[any, any]:
         dict = {}

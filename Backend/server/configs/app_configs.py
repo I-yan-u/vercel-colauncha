@@ -10,14 +10,14 @@ load_dotenv()
 
 
 class DatabaseSettings(BaseSettings):
-    DB_NAME: str = ""
-    DB_USER: str = ""
-    DB_PASSWORD: str = ""
-    DB_HOST: str = ""
-    DB_PORT: int = 5432
-    DB_SCHEMA: str = ""
-    DB_DRIVER: str = ""
-    SQLALCHEMY_DATABASE_URL: str = f"{DB_DRIVER}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+    DB_NAME: str
+    DB_USER: str
+    DB_PASSWORD: str
+    DB_HOST: str
+    DB_PORT: int
+    DB_SCHEMA: str
+    DB_DRIVER: str
+    SQLALCHEMY_DATABASE_URL: str = ""
     TEST_DATABASE_URL: str = ""
 
 

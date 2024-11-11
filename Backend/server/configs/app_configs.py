@@ -9,6 +9,18 @@ __all__ = ["app_configs", "AppConfigs"]
 load_dotenv()
 
 
+class DatabaseSettings(BaseSettings):
+    DB_NAME: str = ""
+    DB_USER: str = ""
+    DB_PASSWORD: str = ""
+    DB_HOST: str = ""
+    DB_PORT: int = 5432
+    DB_SCHEMA: str = ""
+    DB_DRIVER: str = ""
+    SQLALCHEMY_DATABASE_URL: str = f"{DB_DRIVER}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+    TEST_DATABASE_URL: str = ""
+
+
 class JWTSettings(BaseSettings):
     ACCESS_TOKEN_EXPIRES: int = 6
     ALGORITHM: str = "HS512"
@@ -32,7 +44,7 @@ class TestCompany(BaseSettings):
 class AppConfigs(BaseSettings):
     API_VERSION: str = "/api"
     APP_NAME: str = ""
-    # storages: DatabaseSettings = DatabaseSettings()
+    storages: DatabaseSettings = DatabaseSettings()
     HOME: str = ""
     security: JWTSettings = JWTSettings()
     SWAGGER_DOCS_URL: str = API_VERSION + "/docs"

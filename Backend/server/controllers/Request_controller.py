@@ -39,11 +39,11 @@ async def form_submit(
         request_data = RequestSchema(
             required_skills=required_skills,
             estimated_budget=estimated_budget,
-            company_name=company_name,
+            company_name=company_name.capitalize(),
             phone=phone,
             max_project_time=max_project_time,
-            project_name=project_name,
-            country=country,
+            project_name=project_name.capitalize(),
+            country=country.capitalize(),
             email=email,
             description=description
         )

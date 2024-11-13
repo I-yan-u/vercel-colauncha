@@ -3,7 +3,7 @@ import { FaBarsStaggered } from "react-icons/fa6"
 import { Button } from "../components/ui/button";
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { CiFacebook, CiInstagram, CiLinkedin, CiYoutube } from "react-icons/ci";
 
 
@@ -61,16 +61,16 @@ const Header: React.FC = (): JSX.Element => {
              })}
              <div className="w-[85%] border-t-[1px] absolute bottom-16 ">
                 <div className="flex gap-4 py-4">
-                    <Link to="/www.linkedin.com">
+                    <Link to="http://www.linkedin.com">
                         <CiFacebook size={25} color="white"/>
                     </Link>
-                    <Link to="/www.facebook.com">
+                    <Link to="http://www.facebook.com">
                         <CiYoutube size={25} color="white"/>
                     </Link>
-                    <Link to="/www.twitter.com">
+                    <Link to="http://www.twitter.com">
                         <CiInstagram size={25} color="white"/>
                     </Link>
-                    <Link to="www.Instagram.com">
+                    <Link to="htttp://www.Instagram.com">
                         <CiLinkedin size={25} color="white"/>
                     </Link>
                 </div>
@@ -98,12 +98,12 @@ const Header: React.FC = (): JSX.Element => {
                 <img src={logo} alt="colauncha_logo" />
                 </Link>
             </div>
-            <div className="flex flex-col sm:flex-row list-none sm:gap-8">
+            <div className="custom flex flex-col sm:flex-row list-none sm:gap-8">
             {menu.map(({to, label}) =>{
                  return(
                      <li key={label} className="text-xl font-bold text-white cursor-pointer">
-                        <Link to={to}
-                        >{label}</Link>
+                        <NavLink to={to}
+                        >{label}</NavLink>
                      </li>
                  )
              })}

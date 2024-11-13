@@ -78,7 +78,7 @@ const ProjectRequest = () => {
         <Talent />
       </div>
       <div className="text-center text-2xl mb-6 font-bold">
-        <p>Kindly fill out the Form</p>
+        <p>Let Us build your Project for you </p>
       </div>
       <form className="bg-[#f5f5f5] w-[70%] mx-auto flex flex-col justify-center items-center">
         <div className="w-full grid grid-cols-2 p-4 sm:p-12 gap-4 ">

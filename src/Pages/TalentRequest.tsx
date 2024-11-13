@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import Talent from "../sections/Talent";
 import { Button } from "../components/ui/button";
+import ProjectRequest from './ProjectRequest';
 
 
 const TalentRequest = () => {
@@ -72,13 +74,22 @@ const TalentRequest = () => {
       });
   };
 
+ 
+
   return (
     <div className="min-h-screen w-full mt-[100px]">
       <div className="w-[90%] mx-auto ">
         <Talent />
       </div>
-      <div className="text-center text-2xl mb-6 font-bold">
-        <p>Kindly fill out the Form</p>
+      <div className='flex flex-col gap-2 justify-center items-center mb-4'>
+        <p className="text-center text-2xl mb-6 font-bold">Kindly fill out the Form to Join Colauncha as a Talent</p>
+         <>
+         <Button className='bg-green-600 hover:bg-green-400'>
+         <Link to="/project-request" >
+         Request for Talents a Founder
+          </Link>
+         </Button>
+         </>
       </div>
       <form className="bg-[#f5f5f5] w-[70%] mx-auto flex flex-col justify-center items-center">
         <div className="w-full grid grid-cols-2 p-4 sm:p-12 gap-4 ">

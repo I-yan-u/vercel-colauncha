@@ -89,10 +89,10 @@ const Testimonial = () => {
   return (
     <div className="w-full min-h-screen mb-40" id="testimonial-section">
       <div
-        className="bg-cover bg-center h-[70vh] flex flex-col justify-center items-center relative "
+        className="bg-cover bg-center h-[70vh] flex flex-col  relative "
         style={{ backgroundImage: `url(${bg})` }}
       >
-        <h2 className="text-white font-bold text-2xl lg:text-4xl text-center lg:text-start">
+        <h2 className="text-white font-bold text-2xl lg:text-4xl m-4 md:text-start">
           CLIENTS TESTIMONY
         </h2>
         <div className="slider-container w-[75%] mx-auto px-4 lg:px-8 relative space-y-60 top-[250px]">

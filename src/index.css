@@ -92,7 +92,18 @@ body {
   }
 }
 
+
+
 .active {
-  background-color: red;
-  color: red;
+  color: #3783FF;
+  font-weight: bold;
+  background-color: azure;
+  padding: 4px;
+  border-radius: 10px;
+  transition: all 0.5 ease-in-out;
 }
+
+
+
+
+

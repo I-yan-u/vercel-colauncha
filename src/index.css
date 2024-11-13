@@ -2,18 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-
 /* Reset */
-*{
+* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-
 :root {
-  font-family:"Roboto", sans-serif;
+  font-family: "Roboto", sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -27,7 +25,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-body{
+body {
   width: 100%;
 }
 @layer base {
@@ -94,8 +92,7 @@ body{
   }
 }
 
-
-.active{
+.active {
   background-color: red;
   color: red;
 }

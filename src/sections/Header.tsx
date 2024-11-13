@@ -4,16 +4,16 @@ import { Button } from "../components/ui/button";
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { Link } from "react-router-dom";
-import { CiFacebook, CiInstagram, CiLinkedin, CiTwitter, CiYoutube } from "react-icons/ci";
+import { CiFacebook, CiInstagram, CiLinkedin, CiYoutube } from "react-icons/ci";
 
 
 
 
 
 const Header: React.FC = (): JSX.Element => {
-    const menu = [{to: "/", label:"Home"},{to: "/about", label:"About Us"},{to: "/our-team", label:"Our Team"},{to: "/contact-section", label:"Contact Us"}]
+    const menu = [{to: "/", label:"Home"},{to: "/about", label:"About Us"},{to: "/our-team", label:"Our Team"},{to: "/contact", label:"Contact Us"}]
     const [isMobileView, setIsMobileView] = useState<boolean>(window.innerWidth < 720);
-    const [MobileMenu, setMobileMenu]= useState<boolean>(true);
+    const [MobileMenu, setMobileMenu]= useState<boolean>(false);
 
     const handleMobileClick = (): void => {
     setMobileMenu((mobile)=>!mobile)
@@ -80,7 +80,7 @@ const Header: React.FC = (): JSX.Element => {
            )}
            <div className="flex items-center gap-x-4">
            <div>
-                <Button className="text-[#3783FF] w-28 bg-white rounded-xl">
+                <Button className="text-[#3783FF] w-28 bg-white rounded-xl hover:bg-blue-700 hover:text-white">
                 <Link to="/talent-request" onClick={handleMobileClick}>
                     Get Started
                     </Link> 
@@ -109,7 +109,7 @@ const Header: React.FC = (): JSX.Element => {
              })}
             </div>
             <div>
-                <Button className="text-[#3783FF] w-28 bg-white rounded-xl">
+                <Button className="text-[#3783FF] w-28 bg-white rounded-xl hover:bg-blue-700 hover:text-white">
                     <Link to="/talent-request" onClick={handleMobileClick}>
                     Get Started
                     </Link> 

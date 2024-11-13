@@ -5,6 +5,7 @@ from server.schemas import RequestSchema, ServiceResultModel
 import smtplib
 from pydantic import ValidationError
 from server.utils.helper import get_html_template
+from datetime import datetime
 
 
 class RequestFormServices:
@@ -57,7 +58,8 @@ class RequestFormServices:
         try:
             form = RequestSchema.model_validate(requestform)
             parameters = form.model_dump()
-            parameters['filename'] = filename
+            parameters['filename'] = filename if filename else None
+            parameters['current_year'] = datetime.now().strftime('%Y')
             message_company = EmailMessage()
             message_company["From"] = app_configs.email_settings.MAIL_USERNAME
             message_company["To"] = form.email
@@ -76,7 +78,7 @@ class RequestFormServices:
                     app_configs.email_settings.MAIL_USERNAME,
                     app_configs.email_settings.MAIL_PASSWORD
                 )
-                server.send_message(message)
+                server.send_message(message_company)
                 message_company.clear_content() 
             result.data = {"message": "Request submitted successfully"}
             return result

@@ -6,7 +6,7 @@ from fastapi.exceptions import RequestValidationError
 
 
 class ErrorMessage(Exception):
-    def __init__(self, message: str, status_code: int, detail: str | Any) -> None:
+    def __init__(self, message: str, status_code: int, detail: str | Any = None) -> None:
         self.message = message
         self.status_code = status_code
         self.detail = detail

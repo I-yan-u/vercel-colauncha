@@ -1,5 +1,6 @@
 from uuid import UUID
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
+from server.models.company import Company
 from server.configs import app_configs
 
 
@@ -24,28 +25,75 @@ class GetCompanySchema(BaseModel):
         examples=["email@example.com"]
     )
 
+    model_config = {
+        "from_attributes": True
+    }
+
 
 class CompanyLoginSchema(BaseModel):
     email: str = Field(
-        min_length=3, max_length=255, examples=[app_configs.test_company.COMPANY_NAME]
+        min_length=3, max_length=255, examples=[app_configs.test_company.EMAIL]
     )
     password: str = Field(
         min_length=8, max_length=128, examples=[app_configs.test_company.PASSWRD]
     )
 
+    model_config = {
+        "from_attributes": True
+    }
 
-class RegisterCompanySchema(GetCompanySchema):
+
+class RegisterCompanySchema(BaseModel):
+    name: str = Field(
+        description="Name of the company",
+        examples=["Company Name"]
+    )
+    country: str = Field(
+        description="Country where the company is located",
+        examples=["Nigeria"]
+    )
+    phone: str = Field(
+        description="Phone number of the company",
+        examples=["08012345678"]
+    )
+    email: str = Field(
+        description="Email of the company",
+        examples=["email@example.com"]
+    )
     password: str = Field(
         description="Password for the company account",
         examples=[app_configs.test_company.PASSWRD]
     )
 
-    model_config = {
-        "orm_mode": True,
-        "from_attributes": True
-    }
+    model_config = ConfigDict(from_attributes=True)
 
 
 class LoginToken(BaseModel):
     access_token: str
     token_type: str
+
+    model_config = {
+        "from_attributes": True
+    }
+
+
+class UpdateCompanySchema(BaseModel):
+    name: str = Field(
+        description="Name of the company",
+        examples=["Company Name"]
+    )
+    country: str = Field(
+        description="Country where the company is located",
+        examples=["Nigeria"]
+    )
+    phone: str = Field(
+        description="Phone number of the company",
+        examples=["08012345678"]
+    )
+    email: str = Field(
+        description="Email of the company",
+        examples=["email@example.com"]
+    )
+    model_config = {
+        'from_atributes': True
+    }

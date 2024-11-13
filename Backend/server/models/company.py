@@ -7,13 +7,13 @@ from passlib.context import CryptContext
 class Company(ModelBase):
     __tablename__ = "company"
     __mapper_args__ = {"polymorphic_identity": "company"}
-    name = Column(String, nullable=False)
+    name = Column(String, nullable=False, unique=True)
     country = Column(String, nullable=False)
     phone = Column(String, nullable=False)
-    email = Column(String, nullable=False)
+    email = Column(String, nullable=False, unique=True)
     password = Column(String, nullable=False)
 
-    requests = relationship("Request", back_populates="company")
+    # requests = relationship("Request", back_populates="company")
 
     def __init__(
             self,

@@ -75,7 +75,7 @@ async def form_submit(
     )
 
     background_tasks.add_task(
-        RequestFormServices().form_submit,
+        RequestFormServices().form_submit_company,
         request_data,
         file_name
     )

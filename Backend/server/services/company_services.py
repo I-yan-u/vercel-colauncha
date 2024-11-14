@@ -17,7 +17,7 @@ from server.schemas.Company_schema import (
 
 class CompanyServices:
     def __init__(self, db: Session) -> None:
-        self.repo = DBAdaptor(db).repo
+        self.repo = DBAdaptor(db, Company).repo
         self.pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
     async def __check_password(self, password, hashed_password) -> bool:
@@ -62,7 +62,7 @@ class CompanyServices:
         
     async def register(self, data: RegisterCompanySchema) -> GetCompanySchema:
         try:
-            company = await self.repo.add(data.model_dump())
+            company = await self.repo.add(data.model_dump(), GetCompanySchema)
             return company
         except Exception as e:
             print(e)
@@ -78,7 +78,16 @@ class CompanyServices:
             data: dict
         ) -> GetCompanySchema:
         try:
-            company = self.repo.update(entity, data)
+            email = data.get('email')
+            if email:
+                exist = await self.repo.get_by_email(email)
+                if exist and exist.id != entity.id:
+                    raise ErrorMessage(
+                        message="Email already in use by someonelse",
+                        status_code=403
+                    )
+            company = await self.repo.update(entity, data)
+            print(f'Company: {company}')
             return GetCompanySchema.model_validate(company)
         except Exception as e:
             raise ErrorMessage(
@@ -89,7 +98,7 @@ class CompanyServices:
 
     async def get_company(self, id: str) -> GetCompanySchema:
         try:
-            company = await self.repo.get_by_id(id)
+            company = await self.repo.get_by_id(id, GetCompanySchema)
             return GetCompanySchema.model_validate(company)
         except Exception as e:
             raise ErrorMessage(

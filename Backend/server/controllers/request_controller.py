@@ -1,15 +1,19 @@
 from typing import Optional
-from fastapi import APIRouter, BackgroundTasks, File, Form, UploadFile
-from server.schemas import APIResponse, RequestSchema, ServiceResultModel
+from fastapi import APIRouter, BackgroundTasks, Depends, File, Form, UploadFile
+from server.configs.database import get_db
+from server.schemas import APIResponse, RequestSchema, ServiceResultModel, GetRequestSchema
 from server.utils.exception_handler import ErrorMessage
-from server.services.request_form_services import RequestFormServices
+from server.services.request_form_services import RequestFormServices, RequestService
+from sqlalchemy.orm import Session
 from pydantic import ValidationError
+from server.middleware.auth import company_dependency
 
 
 routes = APIRouter(prefix="/requests", tags=["Service Requests"])
 
 @routes.post("/form-submit")
 async def form_submit(
+    company: company_dependency,
     background_tasks: BackgroundTasks,
     required_skills: Optional[str] = Form(None),
     estimated_budget: int = Form(...),
@@ -21,7 +25,22 @@ async def form_submit(
     email: str = Form(...),
     description: str = Form(...),
     attachment: Optional[UploadFile] = File(None),
+    db: Session = Depends(get_db)
 ) -> APIResponse:
+
+    if not company:
+        raise ErrorMessage(
+            message="Unauthorized",
+            status_code=401,
+            detail="Login to submit request"
+        )
+    
+    if company.has_errors:
+        raise ErrorMessage(
+            message="Unauthorized",
+            status_code=401,
+            detail=company.errors
+        )
 
     result = ServiceResultModel()
 
@@ -80,7 +99,46 @@ async def form_submit(
         file_name
     )
 
+    await RequestService(db).add_request(
+        company.data.id, request_data
+    )
+
     return APIResponse(
         data=result.data,
         message="Request submitted successfully"
     )
+
+
+@routes.get("/")
+async def get_req(
+    id: str,
+    company: company_dependency,
+    db: Session = Depends(get_db)
+) -> APIResponse[GetRequestSchema]:
+    if not company:
+        raise ErrorMessage(
+            message="Unauthorized",
+            status_code=401,
+            detail="Login to view request"
+        )
+    
+    if company.has_errors:
+        raise ErrorMessage(
+            message="Unauthorized",
+            status_code=401,
+            detail=company.errors
+        )
+    
+    request = await RequestService(db).get_requests(id)
+    if request.company_id != company.data.id:
+        raise ErrorMessage(
+            message="Unauthorized",
+            status_code=401,
+            detail="Permission denied"
+        )
+    return APIResponse(data=request)
+
+# @routes.delete("/")
+# async def delete_request(
+
+# )

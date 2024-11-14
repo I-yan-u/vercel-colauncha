@@ -13,7 +13,7 @@ class Company(ModelBase):
     email = Column(String, nullable=False, unique=True)
     password = Column(String, nullable=False)
 
-    # requests = relationship("Request", back_populates="company")
+    requests = relationship("Request", back_populates="company", cascade="all, delete-orphan")
 
     def __init__(
             self,

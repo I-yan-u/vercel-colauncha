@@ -1,6 +1,6 @@
 import pydantic as pyd
 import typing as t
-from server.schemas.Request_schema import RequestSchema
+from server.schemas.Request_schema import *
 
 
 T = t.TypeVar("T")

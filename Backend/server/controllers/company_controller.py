@@ -78,5 +78,5 @@ async def update_company(
         )
     result = await CompanyServices(db).update_company(
         company.data,
-        data.model_dump())
-    return APIResponse(data=result)
+        data.model_dump(exclude_none=True))
+    return APIResponse(data='OK')

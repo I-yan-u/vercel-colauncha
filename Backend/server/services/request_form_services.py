@@ -1,7 +1,15 @@
 from email.message import EmailMessage
+from server.models.request import Request
+from server.repository import DBAdaptor
 from server.utils.exception_handler import ErrorMessage
 from server.configs import message, app_configs
-from server.schemas import RequestSchema, ServiceResultModel
+from server.schemas import (
+    RequestSchema,
+    ServiceResultModel,
+    GetRequestSchema,
+    CreateRequestschema
+)
+from sqlalchemy.orm import Session
 import smtplib
 from pydantic import ValidationError
 from server.utils.helper import get_html_template
@@ -89,4 +97,33 @@ class RequestFormServices:
                 message="Something went wrong with sending request", 
                 status_code=500,
                 detail="Error on server side"
+            )
+        
+
+class RequestService:
+    def __init__(self, db: Session) -> None:
+        self.repo = DBAdaptor(db, Request).repo
+
+    async def add_request(self, company_id: str, request: RequestSchema) -> GetRequestSchema:
+        try:
+            data = request.model_dump()
+            data['company_id'] = str(company_id)
+            valid_data = CreateRequestschema(**data)
+            await self.repo.add(valid_data.model_dump(), GetRequestSchema)
+        except Exception as e:
+            raise ErrorMessage(
+                message="Unable to save request to db",
+                status_code=400,
+                detail=e.__repr__()
+            )
+        
+    async def get_requests(self, req_id) -> GetRequestSchema:
+        try:
+            request = await self.repo.get_by_id(req_id, GetRequestSchema)
+            return request
+        except Exception as e:
+            raise ErrorMessage(
+                message="Unable to fetch request from db",
+                status_code=400,
+                detail=e.__repr__()
             )

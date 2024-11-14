@@ -1,3 +1,4 @@
+from typing import Optional
 from uuid import UUID
 from pydantic import BaseModel, Field, ConfigDict
 from server.models.company import Company
@@ -78,21 +79,25 @@ class LoginToken(BaseModel):
 
 
 class UpdateCompanySchema(BaseModel):
-    name: str = Field(
+    name: Optional[str] = Field(
         description="Name of the company",
-        examples=["Company Name"]
+        examples=["Company Name"],
+        default=None
     )
-    country: str = Field(
+    country: Optional[str] = Field(
         description="Country where the company is located",
-        examples=["Nigeria"]
+        examples=["Nigeria"],
+        default=None
     )
-    phone: str = Field(
+    phone: Optional[str] = Field(
         description="Phone number of the company",
-        examples=["08012345678"]
+        examples=["08012345678"],
+        default=None
     )
-    email: str = Field(
+    email: Optional[str] = Field(
         description="Email of the company",
-        examples=["email@example.com"]
+        examples=["email@example.com"],
+        default=None
     )
     model_config = {
         'from_atributes': True

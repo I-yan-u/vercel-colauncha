@@ -7,6 +7,7 @@ from alembic import context
 
 from server.configs import app_configs, Base
 from server.models import company
+from server.models import request
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

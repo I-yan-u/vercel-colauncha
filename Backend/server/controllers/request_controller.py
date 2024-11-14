@@ -1,7 +1,8 @@
 from typing import Optional
 from fastapi import APIRouter, BackgroundTasks, Depends, File, Form, UploadFile
 from server.configs.database import get_db
-from server.schemas import APIResponse, RequestSchema, ServiceResultModel, GetRequestSchema
+from server.schemas import APIResponse, ServiceResultModel
+from server.schemas.Request_schema import RequestSchema, GetRequestSchema
 from server.utils.exception_handler import ErrorMessage
 from server.services.request_form_services import RequestFormServices, RequestService
 from sqlalchemy.orm import Session

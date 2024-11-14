@@ -7,6 +7,7 @@ from server.utils.exception_handler import ErrorMessage
 from server.configs import app_configs
 from server.repository import DBAdaptor
 from sqlalchemy.orm import Session
+from server.schemas import ServiceResultModel
 from server.schemas.Company_schema import (
     GetCompanySchema,
     LoginToken,
@@ -105,4 +106,23 @@ class CompanyServices:
                 message="Error updating company",
                 status_code=400,
                 detail=str(e)
+            )
+        
+    async def get_all(self, filter: dict = None) -> ServiceResultModel:
+        result = ServiceResultModel()
+        try:
+            paged_data = await self.repo.get_all(filter)
+            data = [
+                GetCompanySchema.model_validate(company).model_dump(
+                    exclude_unset=True
+                ) for company in paged_data.data
+            ]
+            paged_data.data = data
+            result.data = paged_data
+            return result
+        except Exception as e:
+            raise ErrorMessage(
+                message="Error retriving data",
+                status_code=400,
+                detail=e.__repr__()
             )

@@ -3,13 +3,18 @@ from server.utils.exception_handler import ErrorMessage
 from server.configs import app_configs
 from server.configs.database import get_db
 from server.middleware.auth import company_dependency
-from server.schemas import APIResponse
+from server.schemas import (
+    APIResponse,
+    PagedQuery,
+    PagedResponse,
+)
 from server.schemas.Company_schema import (
     CompanyLoginSchema,
     GetCompanySchema,
     LoginToken,
     RegisterCompanySchema,
     UpdateCompanySchema,
+    GetCompanyQuery
 )
 from server.services.company_services import CompanyServices
 from sqlalchemy.orm import Session
@@ -36,7 +41,7 @@ async def register_company(
     return APIResponse(data=result, status_code=201)
 
 
-@routes.get('')
+@routes.get('/profile')
 async def get_company(
     *, db: Session = Depends(get_db),
     company: company_dependency
@@ -56,6 +61,7 @@ async def get_company(
         )
     result = await CompanyServices(db).get_company(company.data.id)
     return APIResponse(data=result)
+
 
 @routes.put('/update')
 async def update_company(
@@ -80,3 +86,29 @@ async def update_company(
         company.data,
         data.model_dump(exclude_none=True))
     return APIResponse(data='OK')
+
+
+@routes.get('/')
+async def get_all(
+    company: company_dependency,
+    query: GetCompanyQuery = Depends(),
+    db: Session = Depends(get_db)
+) -> PagedResponse:
+    if not company:
+        raise ErrorMessage(
+            message="Authorization Failed",
+            status_code=401,
+            detail="Not logged in"
+        )
+    
+    if company.has_errors:
+        raise ErrorMessage(
+            message="Authorization Failed",
+            status_code=401,
+            detail=company.errors
+        )
+    result = await CompanyServices(db).get_all(
+        query.model_dump(exclude_none=True)
+    )
+    print(result)
+    return result.data

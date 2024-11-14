@@ -3,9 +3,9 @@ from server.models.request import Request
 from server.repository import DBAdaptor
 from server.utils.exception_handler import ErrorMessage
 from server.configs import message, app_configs
-from server.schemas import (
+from server.schemas import ServiceResultModel
+from server.schemas.Request_schema import (
     RequestSchema,
-    ServiceResultModel,
     GetRequestSchema,
     CreateRequestschema
 )

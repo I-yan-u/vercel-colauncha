@@ -1,5 +1,8 @@
+import math
 from typing import Type, Union
 from sqlalchemy.orm import Session
+from server.utils.helper import paginator
+from server.schemas import PagedResponse
 from server.models.company import Company
 from server.models.request import Request
 from server.models.base import ModelBase
@@ -74,5 +77,31 @@ class Repository:
             raise e
         return True
     
-    async def get_all():
-        ...
+    async def get_all(self, filter: dict = None) -> PagedResponse:
+    
+        page = filter.pop('page') if (filter and filter.get('page')) else 1
+        per_page = filter.pop('per_page') if (filter and filter.get('per_page')) else 10
+        limit = per_page
+        offset = paginator(page, per_page)
+        QueryModel = self._Model
+
+        try:
+            if filter:
+                query = self.db.query(QueryModel).filter_by(**filter)
+                total = query.count()
+            else:
+                query = self.db.query(QueryModel)
+                total = query.count()
+            results = query.limit(limit).offset(offset).all()
+        except Exception as e:
+            raise e
+        count = len(results)
+        pages = math.ceil(total / limit) or 1
+        return PagedResponse(
+            data=results,
+            pages=pages,
+            page_number=page,
+            per_page=limit,
+            count=count,
+            total=total,
+        )

@@ -8,7 +8,9 @@ from server.utils.exception_handler import  (
     ErrorMessage,
     error_handler,
     RequestValidationError,
-    request_validation_error_handler
+    request_validation_error_handler,
+    HTTPException,
+    HTTP_error_handler
 )
 
 
@@ -37,7 +39,8 @@ def create_app():
     # app.exception_handler(ErrorMessage)(error_handler)
     app.exception_handlers = {
         ErrorMessage: error_handler,
-        RequestValidationError: request_validation_error_handler
+        RequestValidationError: request_validation_error_handler,
+        HTTPException: HTTP_error_handler,
     }
     init_db()
     return app

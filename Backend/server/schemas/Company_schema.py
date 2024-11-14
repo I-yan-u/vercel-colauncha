@@ -1,8 +1,10 @@
 from typing import Optional
 from uuid import UUID
+from fastapi import Query
 from pydantic import BaseModel, Field, ConfigDict
 from server.models.company import Company
 from server.configs import app_configs
+from server.schemas import PagedQuery
 
 
 class GetCompanySchema(BaseModel):
@@ -102,3 +104,8 @@ class UpdateCompanySchema(BaseModel):
     model_config = {
         'from_atributes': True
     }
+
+class GetCompanyQuery(PagedQuery):
+    id: Optional[str] = Query(None, description="Company's ID")
+    email: Optional[str] = Query(None, description="Company's email address")
+    name: Optional[str] = Query(None, description="Company's name")

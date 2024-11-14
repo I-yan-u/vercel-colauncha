@@ -17,7 +17,7 @@ const Dashboard = () => {
             <div className="flex gap-20 items-start justify-center">
               <div className="">
                 <Button className="bg-blue-700 hover:bg-blue-400">
-                  <Link to="/talent-request">Request As a Talent</Link>
+                  <Link to="/talent-request">Join as a Talent</Link>
                 </Button>
                 <p className="w-36">Talents can join Colauncha Team via this route</p>
               </div>

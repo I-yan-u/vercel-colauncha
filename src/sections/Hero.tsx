@@ -4,7 +4,7 @@ import { hero_logo } from "../constants";
 
 const Hero = () => {
   return (
-    <div className="w-full lg:h-screen min-h-screen mt-6"  id="hero-section">
+    <div className="w-full lg:h-screen min-h-screen mt-6" id="hero-section">
       <div className=" w-[75%] sm:w-[80%] pt-40 lg:pt-24 grid lg:grid-cols-2 mx-auto ">
         <div className="flex flex-col items-center lg:items-start  justify-center lg:justify-start gap-3 border-red-500">
           <div>
@@ -19,7 +19,7 @@ const Hero = () => {
 
           <div className="">
             <Button className="w-[180px] h-[40px]  text-md font-[600] rounded-xl bg-[#3783ff] hover:bg-blue-600">
-              <Link to="/project-request">Get your team now</Link>
+              <Link to="/dashboard">Get your team now</Link>
             </Button>
           </div>
         </div>

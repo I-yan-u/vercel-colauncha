@@ -23,12 +23,14 @@ const Footer = () => {
       <button className="absolute right-10 lg:right-24 top-[-22px] cursor-pointer w-14 h-14" onClick={ScrollToTop}>
         <img src={scrollup} alt="scrollUp_func"  />
       </button>
+      {/* footer header */}
       <div className="h-[400px] lg:h-[340px] w-full bg-[#facc77]">
         <div className="w-[90%] mx-auto py-24 flex justify-center flex-col gap-16 relative">
           <div className="flex flex-col items-center lg:items-start">
             <h2 className="text-[32px] lg:text-[60px] font-[700]">
               Follow our latest news
             </h2>
+            {/* social links */}
             <div className="flex gap-14 items-center">
               <Link
                 to="http://www.facebook.com"
@@ -62,6 +64,7 @@ const Footer = () => {
               </Link>
             </div>
           </div>
+          {/* copyright */}
           <div className="lg:text-xl flex justify-center lg:absolute bottom-10 right-6">
             copyright &copy; 2024 Designed by Colauncha
           </div>

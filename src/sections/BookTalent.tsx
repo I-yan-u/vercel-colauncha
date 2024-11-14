@@ -8,8 +8,8 @@ const BookTalent = () => {
       className="w-full min-h-screen mt-28 lg:mt-44 mb-12 "
       id="BookTalent-section"
     >
-      <div className="w-[90%] lg:w-[94%] mx-auto flex flex-col-reverse justify-between lg:flex-row ">
-        <div className="my-6 grid lg:grid-rows-2  p-8 lg:w-[50%] gap-4 justify-center lg:justify-start ">
+      <div className="w-[90%] lg:w-[84%] mx-auto flex flex-col-reverse justify-between lg:flex-row ">
+        <div className="my-6 grid lg:grid-rows-2  lg:w-[50%] gap-4 justify-center lg:justify-start ">
           <div className="grid grid-cols-2 gap-4 relative">
             <img
               src={hiw_3}
@@ -46,7 +46,7 @@ const BookTalent = () => {
             </div>
             <div className="flex justify-center lg:justify-start ">
               <Button className="w-[180px] h-[40px]  text-md font-[600] rounded-xl bg-[#3783ff] hover:bg-blue-600">
-                <Link to="/talent-request">Book Here</Link>
+                <Link to="/dashboard">Book Here</Link>
               </Button>
             </div>
           </div>

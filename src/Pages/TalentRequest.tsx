@@ -1,27 +1,25 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import Talent from "../sections/Talent";
 import { Button } from "../components/ui/button";
-import ProjectRequest from './ProjectRequest';
-
+import ProjectRequest from "./ProjectRequest";
 
 const TalentRequest = () => {
-
-   // State for each form field
-   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    country: '',
-    skill: '',
-    education: '',
-    project: '',
-    certification: '',
-    skills: '',
-    message: '',
+  // State for each form field
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    country: "",
+    skill: "",
+    education: "",
+    project: "",
+    certification: "",
+    skills: "",
+    message: "",
   });
   const [file, setFile] = useState(null);
 
@@ -57,39 +55,37 @@ const TalentRequest = () => {
     const dataToSend = { ...formData, file };
 
     // POST request to backend
-    fetch('/api/talent-request', {
-      method: 'POST',
+    fetch("/api/talent-request", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(dataToSend),
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('Form submitted successfully:', data);
+        console.log("Form submitted successfully:", data);
         // Clear form or give feedback to the user
       })
       .catch((error) => {
-        console.error('Error submitting form:', error);
+        console.error("Error submitting form:", error);
       });
   };
-
- 
 
   return (
     <div className="min-h-screen w-full mt-[100px]">
       <div className="w-[90%] mx-auto ">
         <Talent />
       </div>
-      <div className='flex flex-col gap-2 justify-center items-center mb-4'>
-        <p className="text-center text-2xl mb-6 font-bold">Kindly fill out the Form to Join Colauncha as a Talent</p>
-         <>
-         <Button className='bg-green-600 hover:bg-green-400'>
-         <Link to="/project-request" >
-         Request for Talents a Founder
-          </Link>
-         </Button>
-         </>
+      <div className="flex flex-col gap-2 justify-center items-center mb-4">
+        <p className="text-center text-2xl mb-6 font-bold">
+          Kindly fill out the Form to Join Colauncha as a Talent
+        </p>
+        <>
+          <Button className="bg-green-600 hover:bg-green-400">
+            <Link to="/project-request">Request for Talents as Founder</Link>
+          </Button>
+        </>
       </div>
       <form className="bg-[#f5f5f5] w-[70%] mx-auto flex flex-col justify-center items-center">
         <div className="w-full grid grid-cols-2 p-4 sm:p-12 gap-4 ">
@@ -187,7 +183,9 @@ const TalentRequest = () => {
               </div>
               {/* reasons why you are volunteering */}
               <div className="grid w-full  items-center gap-1.5">
-                <Label htmlFor="message">Reasons why you are volunteering</Label>
+                <Label htmlFor="message">
+                  Reasons why you are volunteering
+                </Label>
                 <textarea
                   placeholder="Enter your message here..."
                   id="reasons"
@@ -199,7 +197,12 @@ const TalentRequest = () => {
             </div>
           </div>
         </div>
-        <Button className="w-[30%] mt-6 mb-14 bg-[#3783ff] text-white hover:bg-blue-800" onClick={handleSubmit}>Submit</Button>
+        <Button
+          className="w-[30%] mt-6 mb-14 bg-[#3783ff] text-white hover:bg-blue-800"
+          onClick={handleSubmit}
+        >
+          Submit
+        </Button>
       </form>
     </div>
   );

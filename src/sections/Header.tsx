@@ -110,7 +110,7 @@ const Header: React.FC = (): JSX.Element => {
             </div>
             <div>
                 <Button className="text-[#3783FF] w-28 bg-white rounded-xl hover:bg-blue-700 hover:text-white">
-                    <Link to="/talent-request" onClick={handleMobileClick}>
+                    <Link to="/dashboard" onClick={handleMobileClick}>
                     Get Started
                     </Link> 
                 </Button>

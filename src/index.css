@@ -28,6 +28,8 @@
 body {
   width: 100%;
 }
+
+/* light and dark theme */
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -91,8 +93,6 @@ body {
     @apply bg-background text-foreground;
   }
 }
-
-
 
 .active {
   color: #3783FF;

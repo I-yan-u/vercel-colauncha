@@ -3,6 +3,7 @@ import { client_1, client_2, client_3 } from "../constants";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import { motion } from "motion/react"
 
 const feedback = [
   {
@@ -28,14 +29,12 @@ const feedback = [
   },
 ];
 
-
-
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
   return (
     <div
       className={className}
-      style={{ ...style,background: "skyblue" }}
+      style={{ ...style, background: "skyblue" }}
       onClick={onClick}
     />
   );
@@ -52,9 +51,7 @@ function SamplePrevArrow(props) {
   );
 }
 
-
 const Testimonial = () => {
-
   const settings = {
     dots: true,
     infinite: true,
@@ -83,46 +80,47 @@ const Testimonial = () => {
     ],
   };
 
-
-
-
   return (
     <div className="w-full min-h-screen mb-40" id="testimonial-section">
       <div
         className="bg-cover bg-center h-[70vh] flex flex-col  relative "
         style={{ backgroundImage: `url(${bg})` }}
       >
-        <h2 className="text-white font-bold text-2xl lg:text-4xl m-4 md:text-start">
+        <motion.h2
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+          className="text-white font-bold text-2xl lg:text-4xl m-4 md:text-start"
+        >
           CLIENTS TESTIMONY
-        </h2>
+        </motion.h2>
         <div className="slider-container w-[75%] mx-auto px-4 lg:px-8 relative space-y-60 top-[250px]">
-        <Slider {...settings}>
-          {feedback.map((item) => (
-            <div className="space-y-44">
-            <div
-              key={item.id}
-              className="flex flex-col gap-[40px] bg-[#ff8c0080] p-4 h-[250px] rounded-3xl border-2 z-10 "
-            >
-              <div className="flex items-center gap-6">
-                <img
-                  src={item.img}
-                  alt={`${item.name}'s feedback`}
-                  className="w-12 h-12 rounded-full bg-blue-800"
-                />
-                <p className="text-white text-[18px] font-bold">
-                  {item.name}
-                </p>
+          <Slider {...settings}>
+            {feedback.map((item) => (
+              <div className="space-y-44">
+                <div
+                  key={item.id}
+                  className="flex flex-col gap-[40px] bg-[#ff8c0080] p-4 h-[250px] rounded-3xl border-2 z-10 "
+                >
+                  <div className="flex items-center gap-6">
+                    <img
+                      src={item.img}
+                      alt={`${item.name}'s feedback`}
+                      className="w-12 h-12 rounded-full bg-blue-800"
+                    />
+                    <p className="text-white text-[18px] font-bold">
+                      {item.name}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="pt-4 text-lg text-white">{item.testimony}</p>
+                  </div>
+                </div>
               </div>
-            <div>
-            <p className="pt-4 text-lg text-white">{item.testimony}</p>
-            </div>
-            </div>
-            </div>
-          ))}
-        </Slider>
+            ))}
+          </Slider>
+        </div>
       </div>
-      </div>
-     
     </div>
   );
 };

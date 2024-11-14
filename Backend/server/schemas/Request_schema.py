@@ -1,6 +1,8 @@
 from typing import Optional
+from fastapi import Query
 import pydantic as pyd
 from uuid import UUID
+from server.schemas import PagedQuery
 
 class RequestSchema(pyd.BaseModel):
     email: str = pyd.Field(examples=["email@example.com"])
@@ -57,3 +59,9 @@ class CreateRequestschema(GetRequestSchema):
     model_config = {
         "from_attributes": True
     }
+
+
+class GetRequestQuery(PagedQuery):
+    id: Optional[str] = Query(None, description="Company's ID")
+    company_id: Optional[str] = Query(None, description="Company's email address")
+    project_name: Optional[str] = Query(None, description="Company's name")

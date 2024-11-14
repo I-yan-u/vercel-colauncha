@@ -127,3 +127,22 @@ class RequestService:
                 status_code=400,
                 detail=e.__repr__()
             )
+
+    async def get_all(self, filter: dict = None) -> ServiceResultModel:
+        result = ServiceResultModel()
+        try:
+            paged_data = await self.repo.get_all(filter)
+            data = [
+                GetRequestSchema.model_validate(requests).model_dump(
+                    exclude_unset=True
+                ) for requests in paged_data.data
+            ]
+            paged_data.data = data
+            result.data = paged_data
+            return result
+        except Exception as e:
+            raise ErrorMessage(
+                message="Error retriving data",
+                status_code=400,
+                detail=e.__repr__()
+            )

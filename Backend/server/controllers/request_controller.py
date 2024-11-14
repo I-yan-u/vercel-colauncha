@@ -1,8 +1,8 @@
 from typing import Optional
 from fastapi import APIRouter, BackgroundTasks, Depends, File, Form, UploadFile
 from server.configs.database import get_db
-from server.schemas import APIResponse, ServiceResultModel
-from server.schemas.Request_schema import RequestSchema, GetRequestSchema
+from server.schemas import APIResponse, PagedResponse, ServiceResultModel
+from server.schemas.Request_schema import GetRequestQuery, RequestSchema, GetRequestSchema
 from server.utils.exception_handler import ErrorMessage
 from server.services.request_form_services import RequestFormServices, RequestService
 from sqlalchemy.orm import Session
@@ -138,6 +138,32 @@ async def get_req(
             detail="Permission denied"
         )
     return APIResponse(data=request)
+
+
+@routes.get('/all-requests')
+async def get_all(
+    company: company_dependency,
+    query: GetRequestQuery = Depends(),
+    db: Session = Depends(get_db)
+) -> PagedResponse:
+    if not company:
+        raise ErrorMessage(
+            message="Authorization Failed",
+            status_code=401,
+            detail="Not logged in"
+        )
+    
+    if company.has_errors:
+        raise ErrorMessage(
+            message="Authorization Failed",
+            status_code=401,
+            detail=company.errors
+        )
+    result = await RequestService(db).get_all(
+        query.model_dump(exclude_none=True)
+    )
+    print(result)
+    return result.data
 
 # @routes.delete("/")
 # async def delete_request(

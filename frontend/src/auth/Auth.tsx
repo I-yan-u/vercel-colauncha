@@ -1,6 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'; 
+import axios from "axios"
+import { useAuth } from "../Context/AuthContext";
+
 
 const Auth = () => {
+
+
+//  useEffect(()=>{
+ 
+//  },[])
+
+const { login, setToken } = useAuth();
+
+ const navigate = useNavigate(); //initialization
+
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
     name: '',
@@ -23,10 +37,77 @@ const Auth = () => {
       [name]: value,
     }));
   };
-
-  const handleSubmit = (e) => {
+// handle submit for Registration
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { name, email, password, confirmPassword } = formData;
+
+    axios.post(
+      "https://lc96ppln-8000.uks1.devtunnels.ms/api/company/register",
+      formData, 
+      {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    )
+    .then(response => {
+      console.log(response.data);
+      navigate('/login');  
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
+    
+  
+
+    if (isLogin) {
+      if (!email || !password) {
+        setError('Please fill in both fields.');
+        return;
+      }
+      console.log('Logged in:', { email, password });
+    } else {
+      if (!name || !email || !password || !confirmPassword) {
+        setError('All fields are required.');
+        return;
+      }
+      if (password !== confirmPassword) {
+        setError('Passwords do not match.');
+        return;
+      }
+      console.log('Signed up:', { name, email, password });
+    }
+
+    setError(null);
+  };
+// login 
+  const handleLoginSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const { email, password} = formData;
+
+    axios.post(
+      "https://lc96ppln-8000.uks1.devtunnels.ms/api/company/login",
+      formData, 
+      {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    )
+    .then(response => {
+      setToken(response.data.data.access_token)
+      console.log(response.data);
+      setIsLogin(true)
+      login() 
+      navigate('/dashboard');
+     
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
+    
+  
 
     if (isLogin) {
       if (!email || !password) {
@@ -56,7 +137,7 @@ const Auth = () => {
           {isLogin ? 'Login' : 'Sign Up'}
         </h2>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={!isLogin ? handleSubmit: handleLoginSubmit } className="space-y-4">
           {error && (
             <p className="text-red-600 text-sm text-center">{error}</p>
           )}

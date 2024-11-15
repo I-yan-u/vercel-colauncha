@@ -1,8 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import { placehold } from "../constants";
+import { useAuth } from "../Context/AuthContext";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+  const { logout} = useAuth();
+
+  const handleLogout = ()=>{
+      navigate("/")
+      logout()
+  }
   return (
     <div className="min-h-screen w-full">
       <div className="w-[75%] mx-auto flex flex-col mt-28 gap-10 items-center justify-center ">
@@ -10,7 +18,7 @@ const Dashboard = () => {
         <p>Colaucha's Dashboard helps manage your queries</p>
         <div className="flex flex-col lg:flex-row gap-20">
           <aside className="flex flex-col items-center justify-center gap-4">
-            <Button className="bg-red-400 hover:bg-red-500">logout</Button>
+            <Button className="bg-red-400 hover:bg-red-500" onClick={handleLogout}>logout</Button>
             <img
               src={placehold}
               alt=""

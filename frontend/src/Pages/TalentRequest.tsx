@@ -90,9 +90,9 @@ const TalentRequest = () => {
       <form className="bg-[#f5f5f5] w-[70%] mx-auto flex flex-col justify-center items-center">
         <div className="w-full grid grid-cols-2 p-4 sm:p-12 gap-4 ">
           {/* name and email */}
-          <div>
+          <div className="">
             <div className="grid w-full text-xl  items-center gap-1.5">
-              <Label htmlFor="name">Your Name</Label>
+              <Label htmlFor="name" className="flex justify-start items-center gap-6" >Your Name <p className="text-red-500">(Optional)</p></Label>
               <Input type="text" id="name" required className="h-12" />
             </div>
           </div>

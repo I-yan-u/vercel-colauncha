@@ -1,22 +1,27 @@
 import { useState } from "react";
-
+import axios from "axios";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import Talent from "../sections/Talent";
 import { Button } from "../components/ui/button";
+import { useAuth } from "../Context/AuthContext";
 
 const ProjectRequest = () => {
+
+  const {token} = useAuth();
+
+
   // State for each form field
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     country: "",
-    project: "",
-    budget: "",
-    time_frame: "",
-    company: "",
-    skills: "",
+    project_name: "",
+    estimated_budget: 0,
+    max_project_time: 0,
+    company_name: "",
+    required_skills: "",
     description: "",
   });
   const [file, setFile] = useState(null);
@@ -46,31 +51,38 @@ const ProjectRequest = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Prepare form data to be sent
-    const dataToSend = { ...formData, file };
+    const formDataToSend = new FormData();
 
-    // POST request to backend
-    fetch("/api/talent-request", {
-      method: "POST",
+  // Append each field to formDataToSend
+  for (const key in formData) {
+    formDataToSend.append(key, formData[key]);
+  }
+
+  // Append the file attachment
+  formDataToSend.append("file", file);
+
+  try {
+    // Send the POST request
+    const response = await axios.post("https://lc96ppln-8000.uks1.devtunnels.ms/api/requests/form-submit", formDataToSend, {
       headers: {
         "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(dataToSend),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Form submitted successfully:", data);
-        // Clear form or give feedback to the user
-      })
-      .catch((error) => {
-        console.error("Error submitting form:", error);
-      });
+    });
+
+    // Handle the response
+    console.log("Response:", response.data);
+  } catch (error) {
+    console.error("Error uploading form data:", error);
+  }
+
   };
 
   return (
+
     <div className="min-h-screen w-full mt-[100px]">
       <div className="w-[90%] mx-auto ">
         <Talent />
@@ -84,65 +96,65 @@ const ProjectRequest = () => {
           <div>
             <div className="grid w-full text-xl  items-center gap-1.5">
               <Label htmlFor="name">Your Name</Label>
-              <Input type="text" id="name" required className="h-12" value={formData.name} />
+              <Input type="text" id="name"  className="h-12" value={formData.name} onChange={handleChange}/>
             </div>
           </div>
           <div>
             <div className="grid w-full  items-center gap-1.5">
               <Label htmlFor="email">Email</Label>
-              <Input type="email" id="email" required className="h-12" value={formData.email}/>
+              <Input type="email" id="email" required className="h-12" value={formData.email}  onChange={handleChange}/>
             </div>
           </div>
           {/* phone and Country */}
           <div>
             <div className="grid w-full text-xl  items-center gap-1.5">
               <Label htmlFor="phone">Phone Number</Label>
-              <Input type="number" id="phone" required className="h-12" value={formData.phone} />
+              <Input type="number" id="phone" required className="h-12" value={formData.phone}   onChange={handleChange}/>
             </div>
           </div>
           <div>
             <div className="grid w-full  items-center gap-1.5">
               <Label htmlFor="country">Country</Label>
-              <Input type="text" id="country" required className="h-12" value={formData.country} />
+              <Input type="text" id="country" required className="h-12" value={formData.country}  onChange={handleChange} />
             </div>
           </div>
           {/* Project and budget*/}
           <div>
             <div className="grid w-full text-xl  items-center gap-1.5">
-              <Label htmlFor="project">Project</Label>
-              <Input type="text" id="project" required className="h-12" value={formData.project} />
+              <Label htmlFor="project_name">Project Name</Label>
+              <Input type="text" id="project_name" required className="h-12" value={formData.project_name}  onChange={handleChange} />
             </div>
           </div>
           <div>
             <div className="grid w-full  items-center gap-1.5">
-              <Label htmlFor="budget"> Estimate Budget</Label>
-              <Input type="text" id="budget" required className="h-12"value={formData.budget}/>
+              <Label htmlFor=" estimated_budget"> Estimated Budget</Label>
+              <Input type="text" id=" estimated_budget" required className="h-12"value={formData.estimated_budget}  onChange={handleChange}/>
             </div>
           </div>
           {/*Time frame and company*/}
           <div>
             <div className="grid w-full text-xl  items-center gap-1.5">
-              <Label htmlFor="time-frame">Maximum Time for the Project</Label>
-              <Input type="text" id="time_frame" required className="h-12" value={formData.time_frame} />
+              <Label htmlFor="max_project_time">Maximum Time for the Project</Label>
+              <Input type="text" id="max_project_time" required className="h-12" value={formData.max_project_time}  onChange={handleChange} />
             </div>
           </div>
           <div>
             <div className="grid w-full  items-center gap-1.5">
-              <Label htmlFor="company-name">Company Name</Label>
-              <Input type="text" id="company" required className="h-12" value={formData.company} />
+              <Label htmlFor="company_name">Company Name</Label>
+              <Input type="text" id="company_name" required className="h-12" value={formData.company_name}  onChange={handleChange}/>
             </div>
           </div>
         </div>
         <div className="w-full px-4 sm:p-12 gap-4">
-          {/* Required skills */}
+          {/* Required required_skills */}
           <div className="grid-cols-none">
             <div>
               {/* required skills */}
               <div className="grid w-full  items-center gap-1.5  mb-6">
-                <Label htmlFor="skills">
+                <Label htmlFor="required_skills">
                   Required Skills (Comma separated)
                 </Label>
-                <Input type="text" id="skills" required className="h-12" value={formData.skills} />
+                <Input type="text" id="required_skills" required className="h-12" value={formData.required_skills}  onChange={handleChange} />
               </div>
               {/* upload files */}
               <div className="text-center">
@@ -174,7 +186,7 @@ const ProjectRequest = () => {
               </div>
               {/* Message*/}
               <div className="grid w-full  items-center gap-1.5">
-                <Label htmlFor="message">Description</Label>
+                <Label htmlFor="description">Description</Label>
                 <textarea
                   placeholder="Enter your message here..."
                   id="discription"
@@ -182,6 +194,7 @@ const ProjectRequest = () => {
                   cols="50"
                   className="rounded-md border-[1px] border-gray-300 bg-transparent p-6"
                   value={formData.description}
+                  onChange={handleChange}
                 ></textarea>
               </div>
             </div>

@@ -16,7 +16,7 @@ const Contact = () => {
               insightful articles, tips, and more delivered to your inbox.
             </p>
           </div>
-           <div className=" hidden lg:block lg:absolute lg:top-20 lg:left-[36rem] bg-blue-500 rounded-full">
+           <div className=" hidden lg:block lg:absolute lg:top-20 lg:left-[calc(100%-40rem)] bg-blue-500 rounded-full">
            <Link
                 to="https://wa.me/+23490356672867"
                 className="rounded-full w-28 h-28 flex items-center justify-center"

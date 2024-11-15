@@ -101,7 +101,7 @@ const Header: React.FC = (): JSX.Element => {
             <div className="custom flex flex-col sm:flex-row list-none sm:gap-8">
             {menu.map(({to, label}) =>{
                  return(
-                     <li key={label} className="text-xl font-bold text-white cursor-pointer">
+                     <li key={label} className="text-lg text-white cursor-pointer">
                         <NavLink to={to}
                         >{label}</NavLink>
                      </li>
@@ -110,7 +110,7 @@ const Header: React.FC = (): JSX.Element => {
             </div>
             <div>
                 <Button className="text-[#3783FF] w-28 bg-white rounded-xl hover:bg-blue-700 hover:text-white">
-                    <Link to="/dashboard" onClick={handleMobileClick}>
+                    <Link to="/dashboard">
                     Get Started
                     </Link> 
                 </Button>

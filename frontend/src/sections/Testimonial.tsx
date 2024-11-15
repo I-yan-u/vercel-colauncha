@@ -90,7 +90,7 @@ const Testimonial = () => {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-white font-bold text-2xl lg:text-4xl m-4 md:text-start"
+          className="text-white  text-center font-bold text-2xl lg:text-4xl m-4 md:text-start md:ml-28"
         >
           CLIENTS TESTIMONY
         </motion.h2>

@@ -20,7 +20,7 @@ const Footer = () => {
 
   return (
     <div className="mt-20 relative" id="footer-section">
-      <button className="absolute right-10 lg:right-24 top-[-22px] cursor-pointer w-14 h-14" onClick={ScrollToTop}>
+      <button className="absolute right-10 lg:right-24 top-[-22px] z-30 cursor-pointer w-14 h-14" onClick={ScrollToTop}>
         <img src={scrollup} alt="scrollUp_func"  />
       </button>
       {/* footer header */}

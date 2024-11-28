@@ -61,6 +61,7 @@ class VolunteerSchema(pyd.BaseModel):
         description="List of required skills for the project"
     )
 
+      
 class GetRequestSchema(pyd.BaseModel):
     estimated_budget: int = pyd.Field(
         examples=[1000000],

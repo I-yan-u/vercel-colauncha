@@ -42,7 +42,6 @@ class RequestFormServices:
                     subtype=file_type.split('/')[1],
                     filename=filename
                 )
-
             with smtplib.SMTP(
                 app_configs.email_settings.MAIL_SERVER,
                 app_configs.email_settings.MAIL_PORT,

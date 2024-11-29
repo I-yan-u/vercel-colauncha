@@ -1,8 +1,7 @@
 import { useEffect } from "react";
-import { facebook, instagram, linkedin, scrollup, whatsapp, youtube } from "../constants";
+import { facebook, instagram, linkedin, scrollup, whatsapp} from "../constants";
 import { Link } from "react-router-dom";
-import { BsWhatsapp } from "react-icons/bs";
-
+import { BsTwitterX } from "react-icons/bs";
 
 
 
@@ -33,31 +32,31 @@ const Footer = () => {
             {/* social links */}
             <div className="flex gap-14 items-center">
               <Link
-                to="http://www.facebook.com"
+                to="https://web.facebook.com/profile.php?id=61561301576621" target="_blank" rel="noopener noreferrer"
                 className="rounded-full w-12 h-12 flex items-center justify-center"
               >
                 <img src={facebook} alt="" />
               </Link>
               <Link
-                to="http://www.youtube.com"
-                className="rounded-full w-12 h-12 flex items-center justify-center"
+                to="https://x.com/colauncha" target="_blank" rel="noopener noreferrer"
+                className="rounded-full flex items-center justify-center"
               >
-                <img src={youtube} alt="" />
+               <BsTwitterX className="w-5 h-5 font-bold"/>
               </Link>
               <Link
-                to="http://www.linkedIn.com"
+                to="https://www.linkedin.com/company/colauncha/" target="_blank" rel="noopener noreferrer"
                 className="rounded-full w-12 h-12 flex items-center justify-center"
               >
                 <img src={linkedin} alt="" />
               </Link>
               <Link
-                to="http://www.instagram.com"
+                to="https://www.instagram.com/colauncha/" target="_blank" rel="noopener noreferrer"
                 className="rounded-full w-12 h-12 flex items-center justify-center"
               >
                 <img src={instagram} alt="" />
               </Link>
               <Link
-                to="https://wa.me/+23490356672867"
+                to="https://wa.me/+23490356672867" target="_blank" rel="noopener noreferrer"
                 className="rounded-full w-12 h-12 flex items-center justify-center"
               >
                 <img src={whatsapp} alt="" />

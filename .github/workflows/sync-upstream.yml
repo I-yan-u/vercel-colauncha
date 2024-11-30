@@ -34,10 +34,4 @@ jobs:
       run: |
         git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
         git push origin main
-
-    - name: Deploy to Vercel
-      uses: amondnet/vercel-action@v20
-      with:
-        vercel-token: ${{ secrets.VERCEL_TOKEN }}
-        github-token: ${{ secrets.GIT_TOKEN }}
-        working-directory: frontend/ # Set if deployment is in a subdirectory
+    

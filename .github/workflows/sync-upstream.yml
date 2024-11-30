@@ -38,5 +38,5 @@ jobs:
       uses: amondnet/vercel-action@v20
       with:
         vercel-token: ${{ secrets.VERCEL_TOKEN }}
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github-token: ${{ secrets.GIT_TOKEN }}
         working-directory: frontend/ # Set if deployment is in a subdirectory

@@ -32,7 +32,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
       run: |
-        git remote set-url origin https://x-access-token:${GIT_TOKEN}@github.com/${{ github.repository }}.git
+        git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
         git push origin main
 
     - name: Deploy to Vercel

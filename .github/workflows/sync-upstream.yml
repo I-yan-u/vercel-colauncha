@@ -26,7 +26,7 @@ jobs:
         git remote add upstream https://github.com/Colauncha/Colauncha.git
         git fetch upstream
         git checkout main
-        git merge upstream/main --ff-only || echo "No new changes"
+        git merge upstream/main || echo "No new changes"
       
     - name: Push Changes
       env:

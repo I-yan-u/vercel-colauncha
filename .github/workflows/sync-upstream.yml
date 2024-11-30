@@ -1,0 +1,42 @@
+name: Sync Upstream Changes
+
+on:
+  schedule:
+    - cron: '0 * * * *' # Runs every hour
+  workflow_dispatch: # Allows manual trigger of the workflow
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+      with:
+        persist-credentials: false # Do not use default token
+        fetch-depth: 0 # Fetch all history for branches and tags
+
+    - name: Configure Git
+      run: |
+        git config user.name "GitHub Actions Bot"
+        git config user.email "actions@github.com"
+
+    - name: Add Upstream Repository
+      run: |
+        git remote add upstream https://github.com/Colauncha/Colauncha.git
+        git fetch upstream
+        git checkout main
+        git merge upstream/main --ff-only || echo "No new changes"
+      
+    - name: Push Changes
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git push origin main
+
+    - name: Deploy to Vercel
+      uses: amondnet/vercel-action@v20
+      with:
+        vercel-token: ${{ secrets.VERCEL_TOKEN }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        working-directory: frontend/ # Set if deployment is in a subdirectory

@@ -13,6 +13,7 @@ from server.middleware.auth import company_dependency
 routes = APIRouter(prefix="/requests", tags=["Service Requests"])
 
 
+# function to capture comma separated values as a list
 def return_list_or_none(obj: str | None) -> list | None:
     if not obj: obj = None
     elif "," in obj and len(obj) > 0:
